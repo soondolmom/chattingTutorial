@@ -2,7 +2,7 @@ import 'package:chatapp/helper/helperfunctions.dart';
 import 'package:chatapp/helper/theme.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/services/database.dart';
-import 'package:chatapp/views/chatrooms.dart';
+import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -39,8 +39,9 @@ class _SignUpState extends State<SignUp> {
             if(result != null){
 
               Map<String,String> userDataMap = {
-                "userName" : usernameEditingController.text,
-                "userEmail" : emailEditingController.text
+                //firebase database에 있는 정확한 이름이여야함
+                "name" : usernameEditingController.text,
+                "email" : emailEditingController.text
               };
 
               databaseMethods.addUserInfo(userDataMap);
@@ -74,7 +75,7 @@ class _SignUpState extends State<SignUp> {
                     style: simpleTextStyle(),
                     controller: usernameEditingController,
                     validator: (val){
-                      return val.isEmpty || val.length < 3 ? "Enter Username 3+ characters" : null;
+                      return val.isEmpty || val.length < 3 ? "사용자명을 3자이상 입력하여 주세요." : null;
                     },
                     decoration: textFieldInputDecoration("username"),
                   ),
@@ -83,7 +84,7 @@ class _SignUpState extends State<SignUp> {
                     style: simpleTextStyle(),
                     validator: (val){
                       return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ?
-                          null : "Enter correct email";
+                          null : "이메일을 정확하게 입력하여 주세요.";
                     },
                     decoration: textFieldInputDecoration("email"),
                   ),
@@ -93,7 +94,7 @@ class _SignUpState extends State<SignUp> {
                     decoration: textFieldInputDecoration("password"),
                     controller: passwordEditingController,
                     validator:  (val){
-                      return val.length < 6 ? "Enter Password 6+ characters" : null;
+                      return val.length < 6 ? "비밀번호는 6자이상 입력하여 주세요." : null;
                     },
 
                   ),
@@ -116,7 +117,7 @@ class _SignUpState extends State<SignUp> {
                     )),
                 width: MediaQuery.of(context).size.width,
                 child: Text(
-                  "Sign Up",
+                  "회원가입하기",
                   style: biggerTextStyle(),
                   textAlign: TextAlign.center,
                 ),
@@ -125,17 +126,17 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               height: 16,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30), color: Colors.white),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "Sign Up with Google",
-                style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 16),
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(30), color: Colors.white),
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Text(
+            //     "Sign Up with Google",
+            //     style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
             SizedBox(
               height: 16,
             ),
@@ -143,7 +144,7 @@ class _SignUpState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Already have an account? ",
+                  "이미 가입이 되어있으신가요? ",
                   style: simpleTextStyle(),
                 ),
                 GestureDetector(
@@ -151,7 +152,7 @@ class _SignUpState extends State<SignUp> {
                     widget.toggleView();
                   },
                   child: Text(
-                    "SignIn now",
+                    "로그인하기",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,

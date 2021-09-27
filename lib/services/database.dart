@@ -10,7 +10,7 @@ class DatabaseMethods {
   getUserInfo(String email) async {
     return Firestore.instance
         .collection("users")
-        .where("userEmail", isEqualTo: email)
+        .where("email", isEqualTo: email)
         .getDocuments()
         .catchError((e) {
       print(e.toString());
@@ -20,13 +20,13 @@ class DatabaseMethods {
   searchByName(String searchField) {
     return Firestore.instance
         .collection("users")
-        .where('userName', isEqualTo: searchField)
+        .where('name', isEqualTo: searchField)
         .getDocuments();
   }
 
   Future<bool> addChatRoom(chatRoom, chatRoomId) {
     Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .document(chatRoomId)
         .setData(chatRoom)
         .catchError((e) {
@@ -36,7 +36,7 @@ class DatabaseMethods {
 
   getChats(String chatRoomId) async{
     return Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .document(chatRoomId)
         .collection("chats")
         .orderBy('time')
@@ -46,7 +46,7 @@ class DatabaseMethods {
 
   Future<void> addMessage(String chatRoomId, chatMessageData){
 
-    Firestore.instance.collection("chatRoom")
+    Firestore.instance.collection("ChatRoom")
         .document(chatRoomId)
         .collection("chats")
         .add(chatMessageData).catchError((e){
@@ -56,7 +56,7 @@ class DatabaseMethods {
 
   getUserChats(String itIsMyName) async {
     return await Firestore.instance
-        .collection("chatRoom")
+        .collection("ChatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();
   }

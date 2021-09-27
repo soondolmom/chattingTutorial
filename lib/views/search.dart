@@ -43,8 +43,8 @@ class _SearchState extends State<Search> {
       itemCount: searchResultSnapshot.documents.length,
         itemBuilder: (context, index){
         return userTile(
-          searchResultSnapshot.documents[index].data["userName"],
-          searchResultSnapshot.documents[index].data["userEmail"],
+          searchResultSnapshot.documents[index].data["name"],
+          searchResultSnapshot.documents[index].data["email"],
         );
         }) : Container();
   }
@@ -154,7 +154,7 @@ class _SearchState extends State<Search> {
                       controller: searchEditingController,
                       style: simpleTextStyle(),
                       decoration: InputDecoration(
-                        hintText: "search username ...",
+                        hintText: "사용자 이름을 검색하세요.",
                         hintStyle: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

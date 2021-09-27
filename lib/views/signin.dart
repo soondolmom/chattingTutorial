@@ -2,7 +2,7 @@ import 'package:chatapp/helper/helperfunctions.dart';
 import 'package:chatapp/helper/theme.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/services/database.dart';
-import 'package:chatapp/views/chatrooms.dart';
+import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/views/forgot_password.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -43,9 +43,9 @@ class _SignInState extends State<SignIn> {
 
           HelperFunctions.saveUserLoggedInSharedPreference(true);
           HelperFunctions.saveUserNameSharedPreference(
-              userInfoSnapshot.documents[0].data["userName"]);
+              userInfoSnapshot.documents[0].data["name"]);
           HelperFunctions.saveUserEmailSharedPreference(
-              userInfoSnapshot.documents[0].data["userEmail"]);
+              userInfoSnapshot.documents[0].data["email"]);
 
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatRoom()));
@@ -82,7 +82,7 @@ class _SignInState extends State<SignIn> {
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(val)
                                 ? null
-                                : "Please Enter Correct Email";
+                                : "이메일을 정확하게 입력하여 주세요.";
                           },
                           controller: emailEditingController,
                           style: simpleTextStyle(),
@@ -91,9 +91,9 @@ class _SignInState extends State<SignIn> {
                         TextFormField(
                           obscureText: true,
                           validator: (val) {
-                            return val.length > 6
+                            return val.length >= 6
                                 ? null
-                                : "Enter Password 6+ characters";
+                                : "비밀번호는 6자리이상 입력하여 주세요.";
                           },
                           style: simpleTextStyle(),
                           controller: passwordEditingController,
@@ -119,7 +119,7 @@ class _SignInState extends State<SignIn> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 8),
                             child: Text(
-                              "Forgot Password?",
+                              "비밀번호 찾기",
                               style: simpleTextStyle(),
                             )),
                       )
@@ -134,8 +134,8 @@ class _SignInState extends State<SignIn> {
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                      decoration: BoxDecoration( //boxdecoration->버튼으로만들기
+                          borderRadius: BorderRadius.circular(30), //버튼동그랗게
                           gradient: LinearGradient(
                             colors: [
                               const Color(0xff007EF4),
@@ -144,7 +144,7 @@ class _SignInState extends State<SignIn> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        "Sign In",
+                        "로그인",
                         style: biggerTextStyle(),
                         textAlign: TextAlign.center,
                       ),
@@ -153,43 +153,48 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                     height: 16,
                   ),
-                  Container(
+                  GestureDetector(
+                    onTap: () {
+                      widget.toggleView();
+                    },
+                    child:Container(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color: Colors.white),
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      "Sign In with Google",
-                      style:
-                          TextStyle(fontSize: 17, color: CustomTheme.textColor),
-                      textAlign: TextAlign.center,
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        "회원가입",
+                        style:
+                            TextStyle(fontSize: 17, color: CustomTheme.textColor),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have account? ",
-                        style: simpleTextStyle(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          widget.toggleView();
-                        },
-                        child: Text(
-                          "Register now",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       "Don't have account? ",
+                  //       style: simpleTextStyle(),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         widget.toggleView();
+                  //       },
+                  //       child: Text(
+                  //         "Register now",
+                  //         style: TextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: 16,
+                  //             decoration: TextDecoration.underline),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 50,
                   )

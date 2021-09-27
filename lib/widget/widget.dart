@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 Widget appBarMain(BuildContext context) {
   return AppBar(
-    title: Image.asset(
+    title:
+    // Text('ktalk'),
+    Image.asset(
       "assets/images/logo.png",
       height: 40,
     ),
+
     elevation: 0.0,
     centerTitle: false,
   );
@@ -28,3 +31,5 @@ TextStyle simpleTextStyle() {
 TextStyle biggerTextStyle() {
   return TextStyle(color: Colors.white, fontSize: 17);
 }
+
+
